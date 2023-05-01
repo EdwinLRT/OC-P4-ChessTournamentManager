@@ -19,6 +19,7 @@ class ReportController:
                                key=lambda p: p['name']))
         players_report = ReportViews.display_alphabetically_sorted_players(
             players_list)
+        TournamentController.return_to_main_menu()
         return players_report
 
     def tournament_list_report(self):
@@ -30,6 +31,7 @@ class ReportController:
         tournaments_report = \
             ReportViews.display_tournaments_list(self,
                                                  tournaments_list)
+        TournamentController.return_to_main_menu()
         return tournaments_report
 
     def tournament_sorted_players_report(self):
@@ -44,7 +46,7 @@ class ReportController:
             ReportViews.display_tournament_sorted_players(
                 self, selected_tournament,
                 sorted_players_list)
-
+        TournamentController.return_to_main_menu()
         return tournament_sorted_players
 
     def tournament_rounds_matches_report(self):
@@ -57,4 +59,5 @@ class ReportController:
                 self,
                 selected_tournament,
                 tournament_rounds_list)
+        TournamentController.return_to_main_menu()
         return tournament_rounds
