@@ -79,3 +79,7 @@ flake8 --format=html --htmldir=flake8_report
 ###### Menu de selection des tournois :
 
 ![tournament_seletion](/images/tournament_seletion.png "tournament_seletion")
+
+###### Fin de tournoi et scores :
+
+![tournament_end](/images/tournament_end.png "tournament_end")
