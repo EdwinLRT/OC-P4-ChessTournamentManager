@@ -56,12 +56,6 @@ Dernier rapport Flake8 généré :
 ```
 flake8 --format=html --htmldir=flake8_report
 ```
-###### Dernier rapport Flake8 :
-flake8-rapport-01-05-23
-![Flake8-noerror](/images/flake8-rapport-01-05-23.png "Flake8 report-No error")
-
-
-
 
 
 ## Images du programme 
