@@ -56,3 +56,32 @@ Dernier rapport Flake8 généré :
 ```
 flake8 --format=html --htmldir=flake8_report
 ```
+###### Dernier rapport Flake8 :
+flake8-rapport-01-05-23
+![Flake8-noerror](/images/flake8-rapport-01-05-23.png "Flake8 report-No error")
+
+
+
+
+
+## Images du programme 
+
+###### Menu principal :
+
+![main-menu](/images/main_menu.png "main-menu")
+
+###### Menu de rapports :
+
+![report-menu](/images/report_menu.png "report_menu")
+
+###### Liste des joueurs par ordre alphabétique :
+
+![sorted_players_list_report](/images/sorted_players_list_report.png "sorted_players_list_report")
+
+###### Liste des tournois :
+
+![tournament_list_report](/images/tournament_list_report.png "tournament_list_report")
+
+###### Menu de selection des tournois :
+
+![tournament_seletion](/images/tournament_seletion.png "tournament_seletion")
