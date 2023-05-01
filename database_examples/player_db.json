@@ -1,0 +1,97 @@
+{
+  "_default": {
+    "1": {
+      "chess_id": "AB00000",
+      "name": "LAURENT",
+      "surname": "Edwin",
+      "birth_date": "12345678",
+      "elo": "1000"
+    },
+    "2": {
+      "chess_id": "AB00001",
+      "name": "BEZIAT",
+      "surname": "Constance",
+      "birth_date": "12345678",
+      "elo": "12345678"
+    },
+    "3": {
+      "chess_id": "AB00002",
+      "name": "JONDET",
+      "surname": "Robert",
+      "birth_date": "12345678",
+      "elo": "2300"
+    },
+    "4": {
+      "chess_id": "AB00003",
+      "name": "WAGNER",
+      "surname": "Richard",
+      "birth_date": "12345678",
+      "elo": "1800"
+    },
+    "5": {
+      "chess_id": "AB00004",
+      "name": "CAILLEU",
+      "surname": "Brigitte",
+      "birth_date": "12345678",
+      "elo": "1750"
+    },
+    "6": {
+      "chess_id": "AB00006",
+      "name": "ROUX",
+      "surname": "Henri",
+      "birth_date": "12345678",
+      "elo": "1500"
+    },
+    "7": {
+      "chess_id": "AB00007",
+      "name": "BERBA",
+      "surname": "Aline",
+      "birth_date": "12345678",
+      "elo": "2200"
+    },
+    "8": {
+      "chess_id": "AB00008",
+      "name": "RICHARD",
+      "surname": "Bernadette",
+      "birth_date": "12345678",
+      "elo": "800"
+    },
+    "9": {
+      "chess_id": "AB00010",
+      "name": "PICHON",
+      "surname": "Hortense",
+      "birth_date": "12345678",
+      "elo": "1900"
+    },
+    "10": {
+      "chess_id": "AB00011",
+      "name": "GILLERME",
+      "surname": "Pierre",
+      "birth_date": "12345678",
+      "elo": "1400"
+    },
+    "11": {
+      "chess_id": "AB00012",
+      "name": "REINE",
+      "surname": "Victor",
+      "birth_date": "12345678",
+      "elo": "1600"
+    },
+    "12": {
+      "chess_id": "AB90095",
+      "name": "ROTA",
+      "surname": "Alexandre",
+      "birth_date": "23041997",
+      "elo": "2000"
+    },
+    "13": {
+      "chess_id": "AB10001",
+      "name": "PIERRET",
+      "surname": "Jean-Michel",
+      "birth_date": "12101963",
+      "elo": "1900",
+      "score": 0,
+      "opponents": []
+    }
+  }
+}
