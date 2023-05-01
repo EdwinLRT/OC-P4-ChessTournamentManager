@@ -381,7 +381,6 @@ class TournamentController:
         tournaments_table = db.table('_default')
         selected_tournament, players_list = self.tournament_selection()
         tournament_id = selected_tournament["tournament_id"]
-        print(players_list)
 
         if selected_tournament["tournament_current_round"] == 1:
             while True:
