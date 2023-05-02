@@ -58,7 +58,7 @@ class MenuViews:
     @staticmethod
     def player_info_review(new_player):
         """"Review tournament information before saving to database"""
-        print("\n\n----- Résumé des informations du tournoi -----\n")
+        print("\n\n----- Résumé des informations du joueur -----\n")
         print(f"Identifiant national: {new_player[0]}")
         print(f"Nom: {new_player[1]}")
         print(f"Prénom: {new_player[2]}")
