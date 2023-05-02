@@ -5,6 +5,7 @@ from models.round import Round
 from controllers.player import PlayerController
 from tinydb import TinyDB, Query
 from views.tournament import TournamentViews
+from models.tournament import Tournament
 import random
 
 
@@ -59,9 +60,7 @@ class TournamentController:
     def tournament_selection():
         """Select a tournament from the database
         """
-        tournament_db = TinyDB('./database/tournament_db.json')
-        table = tournament_db.table('_default')
-        all_tournaments = table.all()
+        all_tournaments = Tournament.get_all_tournaments()
         tournaments_list = []
         i = 0
         TournamentViews.display_title_select_tournament()
@@ -112,11 +111,7 @@ class TournamentController:
         tournament_start_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         selected_tournament["tournament_start_time"] = tournament_start_time
         TournamentViews.display_tournament_start_time(selected_tournament)
-        tournament_db = TinyDB('./database/tournament_db.json')
-        table = tournament_db.table('_default')
-        table.update(selected_tournament,
-                     Query().tournament_id == selected_tournament[
-                         "tournament_id"])
+        Tournament.update_tournament(selected_tournament)
         return tournament_start_time
 
     @staticmethod
@@ -127,11 +122,7 @@ class TournamentController:
         round_start_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         selected_tournament["round_start_time"] = round_start_time
         TournamentViews.display_round_start_time(selected_tournament)
-        tournament_db = TinyDB('./database/tournament_db.json')
-        table = tournament_db.table('_default')
-        table.update(selected_tournament, (
-                Query().tournament_id == selected_tournament[
-                                            "tournament_id"]))
+        Tournament.update_tournament(selected_tournament)
         return round_start_time
 
     @staticmethod
@@ -142,11 +133,7 @@ class TournamentController:
         round_end_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         selected_tournament["round_end_time"] = round_end_time
         TournamentViews.display_round_end_time(selected_tournament)
-        tournament_db = TinyDB('./database/tournament_db.json')
-        table = tournament_db.table('_default')
-        table.update(selected_tournament,
-                     Query().tournament_id == selected_tournament[
-                         "tournament_id"])
+        Tournament.update_tournament(selected_tournament)
         return round_end_time
 
     @staticmethod
@@ -157,11 +144,7 @@ class TournamentController:
         tournament_end_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         selected_tournament["tournament_end_time"] = tournament_end_time
         TournamentViews.display_tournament_end_time(selected_tournament)
-        tournament_db = TinyDB('./database/tournament_db.json')
-        table = tournament_db.table('_default')
-        table.update(selected_tournament,
-                     Query().tournament_id == selected_tournament[
-                         "tournament_id"])
+        Tournament.update_tournament(selected_tournament)
         return tournament_end_time
 
     def paired_players(self, players_list):
@@ -208,8 +191,6 @@ class TournamentController:
         player2_id = match[1]["Player 2"][0]
 
         # Retrieve the tournament and players information from the database
-        tournament_db = TinyDB('./database/tournament_db.json')
-        table = tournament_db.table('_default')
         tournament_id = selected_tournament["tournament_id"]
         players_list = selected_tournament["tournament_players_list"]
         player1 = next((player for player in players_list if
@@ -221,27 +202,29 @@ class TournamentController:
         player1['opponents'].append(player2_id)
         player2['opponents'].append(player1_id)
 
-        with TinyDB('db.json') as db:
-            table = db.table('_default')
-            if match_result == '1':
-                match[0]["Player 1"][3] += 1
-                player1["score"] += 1
-                table.update({'tournament_players_list': players_list},
-                             Query().tournament_id == tournament_id)
+        # with TinyDB('db.json') as db:
+        #     table = db.table('_default')
+        if match_result == '1':
+            match[0]["Player 1"][3] += 1
+            player1["score"] += 1
+            # table.update({'tournament_players_list': players_list},
+            #              Query().tournament_id == tournament_id)
 
-            elif match_result == '2':
-                match[1]["Player 2"][3] += 1
-                player2["score"] += 1
-                table.update({'tournament_players_list': players_list},
-                             Query().tournament_id == tournament_id)
+        elif match_result == '2':
+            match[1]["Player 2"][3] += 1
+            player2["score"] += 1
+            # table.update({'tournament_players_list': players_list},
+            #              Query().tournament_id == tournament_id)
 
-            elif match_result == '0':
-                match[0]["Player 1"][3] += 0.5
-                match[1]["Player 2"][3] += 0.5
-                player1["score"] += 0.5
-                player2["score"] += 0.5
-                table.update({'tournament_players_list': players_list},
-                             Query().tournament_id == tournament_id)
+        elif match_result == '0':
+            match[0]["Player 1"][3] += 0.5
+            match[1]["Player 2"][3] += 0.5
+            player1["score"] += 0.5
+            player2["score"] += 0.5
+            # table.update({'tournament_players_list': players_list},
+            #              Query().tournament_id == tournament_id)
+        Tournament.update_players_scores(selected_tournament, players_list,
+                                         tournament_id)
 
     def tournament_matchs_update(selected_tournament, round):
         """ Update the matchs list after each round
@@ -404,7 +387,7 @@ class TournamentController:
                 elif selected_tournament["tournament_current_round"] > \
                         selected_tournament["tournament_rounds_number"]:
                     if selected_tournament[
-                            "tournament_end_time"] == "Non renseigne":
+                        "tournament_end_time"] == "Non renseigne":
                         self.tournament_end_time(selected_tournament)
                         self.tournament_final_scores(players_list)
                         selected_tournament = tournaments_table.get(
@@ -430,7 +413,7 @@ class TournamentController:
                 elif selected_tournament["tournament_current_round"] > \
                         selected_tournament["tournament_rounds_number"]:
                     if selected_tournament[
-                            "tournament_end_time"] == "Non renseigne":
+                        "tournament_end_time"] == "Non renseigne":
                         self.tournament_end_time(selected_tournament)
                         self.tournament_final_scores(players_list)
                         selected_tournament = tournaments_table.get(

@@ -1,4 +1,4 @@
-from tinydb import TinyDB
+from tinydb import TinyDB, Query
 
 
 class Tournament:
@@ -70,3 +70,54 @@ class Tournament:
             # Add the new tournament to the database with the correct ID
             new_tournament_data["tournament_id"] = new_tournament_id
             self.tournament_db.insert(new_tournament_data)
+
+    @staticmethod
+    def get_all_tournaments():
+        """Get all tournaments from the database"""
+        db = TinyDB('./database/tournament_db.json')
+        tournaments_table = db.table('_default')
+        all_tournaments = tournaments_table.all()
+        db.close()
+        return all_tournaments
+
+    @staticmethod
+    def update_tournament(selected_tournament):
+        """Met à jour un tournoi dans la base de données."""
+        tournament_db = TinyDB('./database/tournament_db.json')
+        table = tournament_db.table('_default')
+        table.update(selected_tournament,
+                     Query().tournament_id == selected_tournament[
+                         "tournament_id"])
+
+    @staticmethod
+    def update_players_scores(selected_tournament, players_list,
+                              tournament_id):
+        tournament_db = TinyDB('./database/tournament_db.json')
+        table = tournament_db.table('_default')
+
+        table.update({'tournament_players_list': players_list},
+                     Query().tournament_id == tournament_id)
+
+    @staticmethod
+    def update_tournament_matchs(selected_tournament, round):
+        """ Update the matchs list after each round """
+        # Retrieve the tournament and players information from the database
+        tournament_db = TinyDB('./database/tournament_db.json')
+        table = tournament_db.table('_default')
+        tournament_id = selected_tournament["tournament_id"]
+        matchs_list = selected_tournament["tournament_rounds_list"]
+        # Add the match to the tournament's matchs list
+        matchs_list.append(round)
+        table.update({'tournament_rounds_list': matchs_list},
+                     Query().tournament_id == tournament_id)
+
+    @staticmethod
+    def get_all():
+        with TinyDB('tournament_db.json') as db:
+            table = db.table('_default')
+            tournaments = []
+            for t in table:
+                t = Tournament.from_dict(t)
+                tournaments.append(t)
+            print(tournaments)
+            return tournaments
