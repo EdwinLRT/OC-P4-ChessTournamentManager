@@ -406,6 +406,7 @@ class TournamentController:
                     if selected_tournament[
                             "tournament_end_time"] == "Non renseigne":
                         self.tournament_end_time(selected_tournament)
+                        self.tournament_final_scores(players_list)
                         selected_tournament = tournaments_table.get(
                             Tournament.tournament_id == tournament_id)
                         break
@@ -431,12 +432,14 @@ class TournamentController:
                     if selected_tournament[
                             "tournament_end_time"] == "Non renseigne":
                         self.tournament_end_time(selected_tournament)
+                        self.tournament_final_scores(players_list)
                         selected_tournament = tournaments_table.get(
                             Tournament.tournament_id == tournament_id)
                         break
                     else:
                         TournamentViews.display_tournament_already_ended(
                             selected_tournament)
+                        self.tournament_final_scores(players_list)
                         break
         elif selected_tournament["tournament_current_round"] > \
                 selected_tournament["tournament_rounds_number"]:
