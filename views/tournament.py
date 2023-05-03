@@ -133,7 +133,7 @@ class TournamentViews:
         print(f"\n[TIME] Date et heure de fin |"
               f" {selected_tournament['tournament_end_time']}")
         print("\n\nLe tournoi est terminé."
-              " Vous pouvez maintenant consulter les résultats.")
+              " Relancez le tournoi pour consulter les résultats.")
 
     @staticmethod
     def input_round_start_time():

@@ -337,7 +337,11 @@ class TournamentController:
                                 reverse=True)
         TournamentViews.display_final_scores(sorted_players)
 
-    def tournament_start_from_first_round(self, Tournament, selected_tournament,tournaments_table, tournament_id, players_list):
+    def tournament_start_from_first_round(self, Tournament,
+                                          selected_tournament,
+                                          tournaments_table,
+                                          tournament_id,
+                                          players_list):
         while True:
             if selected_tournament["tournament_current_round"] == 1:
                 round_matchs = []
@@ -359,9 +363,8 @@ class TournamentController:
             elif selected_tournament["tournament_current_round"] > \
                     selected_tournament["tournament_rounds_number"]:
                 if selected_tournament[
-                    "tournament_end_time"] == "Non renseigne":
+                        "tournament_end_time"] == "Non renseigne":
                     self.tournament_end_time(selected_tournament)
-                    self.tournament_final_scores(players_list)
                     selected_tournament = tournaments_table.get(
                         Tournament.tournament_id == tournament_id)
                     break
@@ -370,7 +373,11 @@ class TournamentController:
                         selected_tournament)
                     break
 
-    def tournament_start_from_middle_round(self, Tournament, selected_tournament, tournaments_table, tournament_id, players_list):
+    def tournament_start_from_middle_round(self, Tournament,
+                                           selected_tournament,
+                                           tournaments_table,
+                                           tournament_id,
+                                           players_list):
         while True:
             if 1 < selected_tournament["tournament_current_round"] <= \
                     selected_tournament["tournament_rounds_number"]:
@@ -384,9 +391,8 @@ class TournamentController:
             elif selected_tournament["tournament_current_round"] > \
                     selected_tournament["tournament_rounds_number"]:
                 if selected_tournament[
-                    "tournament_end_time"] == "Non renseigne":
+                        "tournament_end_time"] == "Non renseigne":
                     self.tournament_end_time(selected_tournament)
-                    self.tournament_final_scores(players_list)
                     selected_tournament = tournaments_table.get(
                         Tournament.tournament_id == tournament_id)
                     break
@@ -406,12 +412,19 @@ class TournamentController:
         tournament_id = selected_tournament["tournament_id"]
 
         if selected_tournament["tournament_current_round"] == 1:
-            self.tournament_start_from_first_round(Tournament, selected_tournament, tournaments_table, tournament_id, players_list)
-
+            self.tournament_start_from_first_round(Tournament,
+                                                   selected_tournament,
+                                                   tournaments_table,
+                                                   tournament_id,
+                                                   players_list)
 
         elif 1 < selected_tournament["tournament_current_round"] <= \
                 selected_tournament["tournament_rounds_number"]:
-            self.tournament_start_from_middle_round(Tournament, selected_tournament, tournaments_table, tournament_id, players_list)
+            self.tournament_start_from_middle_round(Tournament,
+                                                    selected_tournament,
+                                                    tournaments_table,
+                                                    tournament_id,
+                                                    players_list)
 
         elif selected_tournament["tournament_current_round"] > \
                 selected_tournament["tournament_rounds_number"]:

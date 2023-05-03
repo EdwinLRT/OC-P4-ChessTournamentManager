@@ -111,14 +111,3 @@ class Tournament:
             matchs_list.append(round)
             table.update({'tournament_rounds_list': matchs_list},
                          Query().tournament_id == tournament_id)
-
-    @staticmethod
-    def get_all():
-        with TinyDB('tournament_db.json') as db:
-            table = db.table('_default')
-            tournaments = []
-            for t in table:
-                t = Tournament.from_dict(t)
-                tournaments.append(t)
-            print(tournaments)
-            return tournaments
