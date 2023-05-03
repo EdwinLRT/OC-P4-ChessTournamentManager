@@ -45,17 +45,16 @@ class ReportViews:
                                           sorted_players_list):
         table = PrettyTable()
         table.clear()
-        table.field_names = ["Chess ID", "Nom", "Prénom", "Date de naissance",
-                             "Elo"]
+        table.field_names = ["Chess ID", "Nom", "Prénom", "Elo"]
         # extract infos from players_list
         table.align = "l"
+        print(sorted_players_list)
         for player in sorted_players_list:
             table.add_row([
                 player["chess_id"],
                 player["name"],
                 player["surname"],
-                player["birth_date"],
-                player["elo"],
+                player["elo"]
             ])
         print(
             f"\nListe des joueurs du {selected_tournament['tournament_name']}"
