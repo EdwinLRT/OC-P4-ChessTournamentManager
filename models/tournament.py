@@ -103,13 +103,14 @@ class Tournament:
         """ Update the matchs list after each round """
         # Retrieve the tournament and players information from the database
         tournament_db = TinyDB('./database/tournament_db.json')
-        table = tournament_db.table('_default')
-        tournament_id = selected_tournament["tournament_id"]
-        matchs_list = selected_tournament["tournament_rounds_list"]
-        # Add the match to the tournament's matchs list
-        matchs_list.append(round)
-        table.update({'tournament_rounds_list': matchs_list},
-                     Query().tournament_id == tournament_id)
+        with tournament_db as db:
+            table = db.table('_default')
+            tournament_id = selected_tournament["tournament_id"]
+            matchs_list = selected_tournament["tournament_rounds_list"]
+            # Add the match to the tournament's matchs list
+            matchs_list.append(round)
+            table.update({'tournament_rounds_list': matchs_list},
+                         Query().tournament_id == tournament_id)
 
     @staticmethod
     def get_all():

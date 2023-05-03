@@ -202,42 +202,21 @@ class TournamentController:
         player1['opponents'].append(player2_id)
         player2['opponents'].append(player1_id)
 
-        # with TinyDB('db.json') as db:
-        #     table = db.table('_default')
         if match_result == '1':
             match[0]["Player 1"][3] += 1
             player1["score"] += 1
-            # table.update({'tournament_players_list': players_list},
-            #              Query().tournament_id == tournament_id)
 
         elif match_result == '2':
             match[1]["Player 2"][3] += 1
             player2["score"] += 1
-            # table.update({'tournament_players_list': players_list},
-            #              Query().tournament_id == tournament_id)
 
         elif match_result == '0':
             match[0]["Player 1"][3] += 0.5
             match[1]["Player 2"][3] += 0.5
             player1["score"] += 0.5
             player2["score"] += 0.5
-            # table.update({'tournament_players_list': players_list},
-            #              Query().tournament_id == tournament_id)
         Tournament.update_players_scores(selected_tournament, players_list,
                                          tournament_id)
-
-    def tournament_matchs_update(selected_tournament, round):
-        """ Update the matchs list after each round
-        """
-        # Retrieve the tournament and players information from the database
-        tournament_db = TinyDB('./database/tournament_db.json')
-        table = tournament_db.table('_default')
-        tournament_id = selected_tournament["tournament_id"]
-        matchs_list = selected_tournament["tournament_rounds_list"]
-        # Add the match to the tournament's matchs list
-        matchs_list.append(round)
-        table.update({'tournament_rounds_list': matchs_list},
-                     Query().tournament_id == tournament_id)
 
     def match_results_input(selected_tournament, match):
         """
@@ -285,8 +264,9 @@ class TournamentController:
 
         round_end = self.round_end_time(selected_tournament)
         round_1 = ('Round_1', round_start, current_round, round_end)
-        TournamentController.tournament_matchs_update(selected_tournament,
-                                                      round_1)
+        # TournamentController.tournament_matchs_update(selected_tournament,
+        #                                               round_1)
+        Tournament.update_tournament_matchs(selected_tournament, round_1)
         selected_tournament["tournament_rounds_list"].append(round_1)
 
     def tournament_next_rounds(self, selected_tournament, players_list,
@@ -327,8 +307,9 @@ class TournamentController:
         round = (
             'Round_' + str(round_number), round_start, current_round,
             round_end)
-        TournamentController.tournament_matchs_update(selected_tournament,
-                                                      round)
+        # TournamentController.tournament_matchs_update(selected_tournament,
+        #                                               round)
+        Tournament.update_tournament_matchs(selected_tournament, round)
         selected_tournament["tournament_rounds_list"].append(round)
 
     @staticmethod
@@ -356,6 +337,65 @@ class TournamentController:
                                 reverse=True)
         TournamentViews.display_final_scores(sorted_players)
 
+    def tournament_start_from_first_round(self, Tournament, selected_tournament,tournaments_table, tournament_id, players_list):
+        while True:
+            if selected_tournament["tournament_current_round"] == 1:
+                round_matchs = []
+                self.tournament_first_round(selected_tournament,
+                                            players_list, round_matchs)
+                TournamentController.increment_tournament_current_round(
+                    tournament_id)
+                selected_tournament = tournaments_table.get(
+                    Tournament.tournament_id == tournament_id)
+            elif 1 < selected_tournament["tournament_current_round"] <= \
+                    selected_tournament["tournament_rounds_number"]:
+                round_matchs = []
+                self.tournament_next_rounds(selected_tournament,
+                                            players_list, round_matchs)
+                TournamentController.increment_tournament_current_round(
+                    tournament_id)
+                selected_tournament = tournaments_table.get(
+                    Tournament.tournament_id == tournament_id)
+            elif selected_tournament["tournament_current_round"] > \
+                    selected_tournament["tournament_rounds_number"]:
+                if selected_tournament[
+                    "tournament_end_time"] == "Non renseigne":
+                    self.tournament_end_time(selected_tournament)
+                    self.tournament_final_scores(players_list)
+                    selected_tournament = tournaments_table.get(
+                        Tournament.tournament_id == tournament_id)
+                    break
+                else:
+                    TournamentViews.display_tournament_already_ended(
+                        selected_tournament)
+                    break
+
+    def tournament_start_from_middle_round(self, Tournament, selected_tournament, tournaments_table, tournament_id, players_list):
+        while True:
+            if 1 < selected_tournament["tournament_current_round"] <= \
+                    selected_tournament["tournament_rounds_number"]:
+                round_matchs = []
+                self.tournament_next_rounds(selected_tournament,
+                                            players_list, round_matchs)
+                TournamentController.increment_tournament_current_round(
+                    tournament_id)
+                selected_tournament = tournaments_table.get(
+                    Tournament.tournament_id == tournament_id)
+            elif selected_tournament["tournament_current_round"] > \
+                    selected_tournament["tournament_rounds_number"]:
+                if selected_tournament[
+                    "tournament_end_time"] == "Non renseigne":
+                    self.tournament_end_time(selected_tournament)
+                    self.tournament_final_scores(players_list)
+                    selected_tournament = tournaments_table.get(
+                        Tournament.tournament_id == tournament_id)
+                    break
+                else:
+                    TournamentViews.display_tournament_already_ended(
+                        selected_tournament)
+                    self.tournament_final_scores(players_list)
+                    break
+
     def start_tournament(self):
 
         """Start a new tournament"""
@@ -366,64 +406,13 @@ class TournamentController:
         tournament_id = selected_tournament["tournament_id"]
 
         if selected_tournament["tournament_current_round"] == 1:
-            while True:
-                if selected_tournament["tournament_current_round"] == 1:
-                    round_matchs = []
-                    self.tournament_first_round(selected_tournament,
-                                                players_list, round_matchs)
-                    TournamentController.increment_tournament_current_round(
-                        tournament_id)
-                    selected_tournament = tournaments_table.get(
-                        Tournament.tournament_id == tournament_id)
-                elif 1 < selected_tournament["tournament_current_round"] <= \
-                        selected_tournament["tournament_rounds_number"]:
-                    round_matchs = []
-                    self.tournament_next_rounds(selected_tournament,
-                                                players_list, round_matchs)
-                    TournamentController.increment_tournament_current_round(
-                        tournament_id)
-                    selected_tournament = tournaments_table.get(
-                        Tournament.tournament_id == tournament_id)
-                elif selected_tournament["tournament_current_round"] > \
-                        selected_tournament["tournament_rounds_number"]:
-                    if selected_tournament[
-                        "tournament_end_time"] == "Non renseigne":
-                        self.tournament_end_time(selected_tournament)
-                        self.tournament_final_scores(players_list)
-                        selected_tournament = tournaments_table.get(
-                            Tournament.tournament_id == tournament_id)
-                        break
-                    else:
-                        TournamentViews.display_tournament_already_ended(
-                            selected_tournament)
-                        break
+            self.tournament_start_from_first_round(Tournament, selected_tournament, tournaments_table, tournament_id, players_list)
+
 
         elif 1 < selected_tournament["tournament_current_round"] <= \
                 selected_tournament["tournament_rounds_number"]:
-            while True:
-                if 1 < selected_tournament["tournament_current_round"] <= \
-                        selected_tournament["tournament_rounds_number"]:
-                    round_matchs = []
-                    self.tournament_next_rounds(selected_tournament,
-                                                players_list, round_matchs)
-                    TournamentController.increment_tournament_current_round(
-                        tournament_id)
-                    selected_tournament = tournaments_table.get(
-                        Tournament.tournament_id == tournament_id)
-                elif selected_tournament["tournament_current_round"] > \
-                        selected_tournament["tournament_rounds_number"]:
-                    if selected_tournament[
-                        "tournament_end_time"] == "Non renseigne":
-                        self.tournament_end_time(selected_tournament)
-                        self.tournament_final_scores(players_list)
-                        selected_tournament = tournaments_table.get(
-                            Tournament.tournament_id == tournament_id)
-                        break
-                    else:
-                        TournamentViews.display_tournament_already_ended(
-                            selected_tournament)
-                        self.tournament_final_scores(players_list)
-                        break
+            self.tournament_start_from_middle_round(Tournament, selected_tournament, tournaments_table, tournament_id, players_list)
+
         elif selected_tournament["tournament_current_round"] > \
                 selected_tournament["tournament_rounds_number"]:
             if selected_tournament["tournament_end_time"] == "Non renseigne":
