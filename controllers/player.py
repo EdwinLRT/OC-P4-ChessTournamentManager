@@ -1,4 +1,3 @@
-from tinydb import TinyDB
 from views.menu import MenuViews
 from views.round import RoundViews
 from models.player import Player
@@ -11,7 +10,7 @@ class PlayerController:
         self.player_model = Player()
 
     @staticmethod
-    def display_all_players():
+    def display_all_players(self):
         all_players = self.player_model.get_all_players()
         players_list = []
         i = 0
