@@ -38,3 +38,10 @@ class Player:
             self.player_db.update(new_player_data, doc_ids=[self.player_id])
         else:
             self.player_db.insert(new_player_data)
+
+    def get_all_players(self):
+        all_players = self.table.all()
+        players_list = []
+        for player in all_players:
+            players_list.append(player)
+        return players_list
