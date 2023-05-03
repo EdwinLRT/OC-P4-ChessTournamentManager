@@ -4,77 +4,77 @@
       "chess_id": "AB00000",
       "name": "LAURENT",
       "surname": "Edwin",
-      "birth_date": "12345678",
+      "birth_date": "23041997",
       "elo": "1000"
     },
     "2": {
       "chess_id": "AB00001",
       "name": "BEZIAT",
       "surname": "Constance",
-      "birth_date": "12345678",
-      "elo": "12345678"
+      "birth_date": "10061997",
+      "elo": "1200"
     },
     "3": {
       "chess_id": "AB00002",
       "name": "JONDET",
       "surname": "Robert",
-      "birth_date": "12345678",
+      "birth_date": "11031988",
       "elo": "2300"
     },
     "4": {
       "chess_id": "AB00003",
       "name": "WAGNER",
       "surname": "Richard",
-      "birth_date": "12345678",
+      "birth_date": "01021971",
       "elo": "1800"
     },
     "5": {
       "chess_id": "AB00004",
       "name": "CAILLEU",
       "surname": "Brigitte",
-      "birth_date": "12345678",
+      "birth_date": "05121963",
       "elo": "1750"
     },
     "6": {
       "chess_id": "AB00006",
       "name": "ROUX",
       "surname": "Henri",
-      "birth_date": "12345678",
+      "birth_date": "14081995",
       "elo": "1500"
     },
     "7": {
       "chess_id": "AB00007",
       "name": "BERBA",
       "surname": "Aline",
-      "birth_date": "12345678",
+      "birth_date": "08091985",
       "elo": "2200"
     },
     "8": {
       "chess_id": "AB00008",
       "name": "RICHARD",
       "surname": "Bernadette",
-      "birth_date": "12345678",
+      "birth_date": "12121998",
       "elo": "800"
     },
     "9": {
       "chess_id": "AB00010",
       "name": "PICHON",
       "surname": "Hortense",
-      "birth_date": "12345678",
+      "birth_date": "17071993",
       "elo": "1900"
     },
     "10": {
       "chess_id": "AB00011",
       "name": "GILLERME",
       "surname": "Pierre",
-      "birth_date": "12345678",
+      "birth_date": "05081978",
       "elo": "1400"
     },
     "11": {
       "chess_id": "AB00012",
       "name": "REINE",
       "surname": "Victor",
-      "birth_date": "12345678",
+      "birth_date": "15091997",
       "elo": "1600"
     },
     "12": {
@@ -82,15 +82,24 @@
       "name": "ROTA",
       "surname": "Alexandre",
       "birth_date": "23041997",
-      "elo": "2000"
+      "elo": "900"
     },
     "13": {
       "chess_id": "AB10001",
       "name": "PIERRET",
       "surname": "Jean-Michel",
-      "birth_date": "12101963",
+      "birth_date": "07117968",
       "elo": "1900",
       "score": 0,
+      "opponents": []
+    },
+    "14": {
+      "chess_id": "AB00021",
+      "name": "Baer",
+      "surname": "Edouard",
+      "birth_date": "20021961",
+      "elo": "1400",
+      "score": 0.0,
       "opponents": []
     }
   }
